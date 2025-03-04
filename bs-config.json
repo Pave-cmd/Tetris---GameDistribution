@@ -1,0 +1,11 @@
+{
+  "server": {
+    "baseDir": "./",
+    "routes": {
+      "/node_modules": "node_modules"
+    }
+  },
+  "files": ["./src/**/*.{js,html,css}", "./*.{html,css}"],
+  "port": 3000,
+  "open": true
+}

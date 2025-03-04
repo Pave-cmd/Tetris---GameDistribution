@@ -1,20 +1,22 @@
 {
-    "name": "tetris-game",
-    "version": "1.0.0",
-    "description": "Simple HTML5 Tetris Game",
-    "main": "index.html",
-    "scripts": {
-      "start": "lite-server",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-      "tetris",
-      "game",
-      "html5"
-    ],
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-      "lite-server": "^2.6.1"
-    }
+  "name": "tetris-game",
+  "version": "1.0.0",
+  "description": "Simple HTML5 Tetris Game",
+  "main": "index.html",
+  "type": "commonjs",
+  "scripts": {
+    "start": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tetris",
+    "game",
+    "html5"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "serve": "^14.2.4"
   }
+}
