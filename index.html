@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Enhanced Tetris Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            overscroll-behavior: none; /* Zabrání "přetažení" na mobilních zařízeních */
+            touch-action: manipulation; /* Omezí výchozí dotykové akce */
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            transform: scale(0.95); /* Trochu zmenšíme pro lepší fit */
+            transform-origin: center center;
+        }
+        .game-board {
+            position: relative;
+            max-height: calc(100vh - 20px);
+            max-width: 100%;
+        }
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .game-board {
+                order: 1;
+                margin-bottom: 10px;
+                transform: scale(0.9); /* Více zmenšíme na mobilních zařízeních */
+            }
+            .game-info {
+                order: 2;
+                transform: scale(0.9);
+            }
+        }
+        @media screen and (max-height: 650px) {
+            .container {
+                transform: scale(0.85);
+            }
+            .controls p:not(:first-child) {
+                display: inline-block;
+                margin-right: 10px;
+            }
+        }
+        @media screen and (max-height: 550px) {
+            .container {
+                transform: scale(0.75);
+            }
+        }
+        
+        /* Vylepšení přístupnosti a tlačítek */
+        #start-button {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        #start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 255, 255, 0.4);
+        }
+        #start-button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-info">
+            <div class="title-section">
+                <h1>TETRIS</h1>
+                <div class="version">v2.0</div>
+            </div>
+            <div class="score-container">
+                <p>Score: <span id="score">0</span></p>
+                <p>Level: <span id="level">1</span></p>
+                <p>Lines: <span id="lines">0</span></p>
+            </div>
+            <div class="next-piece">
+                <p>Next:</p>
+                <div id="next-grid"></div>
+            </div>
+            <div class="controls">
+                <p>Controls:</p>
+                <p>↑ - Rotate</p>
+                <p>← → - Move</p>
+                <p>↓ - Soft Drop</p>
+                <p>Space - Hard Drop</p>
+                <p>P - Pause</p>
+                <p>M - Mute/Unmute</p>
+            </div>
+            <button id="start-button">Start Game</button>
+            <div class="game-info-footer">
+                <div class="credit">Enhanced Tetris Experience</div>
+            </div>
+        </div>
+        <div class="game-board">
+            <div id="grid"></div>
+            <div class="grid-overlay"></div>
+        </div>
+        
+        <!-- Dotykové ovládání pro mobilní zařízení -->
+        <div id="touch-controls">
+            <div class="touch-button" id="touch-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </div>
+            <div class="touch-button" id="touch-right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+            <div class="touch-button" id="touch-rotate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+            </div>
+            <div class="touch-button" id="touch-down">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+            <div class="touch-button" id="touch-drop">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="6 13 12 19 18 13"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Zabránit posouvání stránky pomocí šipek a dalších herních kláves
+        window.addEventListener('keydown', function(e) {
+            // Kódy kláves: šipky, mezerník, P, M
+            if([32, 37, 38, 39, 40, 80, 112, 77, 109].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+                return false;
+            }
+        }, { passive: false });
+
+        // Dodatečné vylepšení pro mobilní zařízení - zakázání tahu
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('#grid') || e.target.closest('.game-board')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Zabraňuje double-tap zoom na mobilních zařízeních
+        document.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        // Zajistit, že hra získá focus po načtení
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('grid').focus();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

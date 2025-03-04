@@ -1,0 +1,448 @@
+/* Základní styly */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #e6e6e6;
+}
+
+.container {
+    display: flex;
+    gap: 25px;
+    padding: 30px;
+    background-color: rgba(30, 30, 60, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    min-width: 220px;
+}
+
+h1 {
+    text-align: center;
+    color: #0ff;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+}
+
+.score-container {
+    background-color: rgba(25, 25, 50, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #0ff;
+}
+
+.score-container p {
+    margin: 8px 0;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.score-container span {
+    color: #0ff;
+    font-weight: bold;
+}
+
+.next-piece {
+    background-color: rgba(25, 25, 50, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #0ff;
+}
+
+.next-piece p {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#next-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 25px);
+    grid-template-rows: repeat(4, 25px);
+    gap: 2px;
+    background-color: rgba(10, 10, 30, 0.5);
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 8px;
+    justify-content: center;
+}
+
+.controls {
+    background-color: rgba(25, 25, 50, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #0ff;
+}
+
+.controls p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.controls p:first-child {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#start-button {
+    background: linear-gradient(to bottom, #0ff, #08a0a0);
+    color: #1a1a2e;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+#start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.5);
+}
+
+#start-button:active {
+    transform: translateY(1px);
+}
+
+.game-board {
+    background-color: rgba(25, 25, 50, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(20, 30px);
+    gap: 2px;
+    background-color: rgba(10, 10, 30, 0.8);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.cell {
+    background-color: rgba(30, 30, 60, 0.5);
+    border-radius: 2px;
+    transition: background-color 0.1s;
+}
+
+.tetromino {
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+/* Vylepšené barvy tetromin s gradienty */
+.I {
+    background: linear-gradient(135deg, #00ffff 0%, #00b0b0 100%);
+    border: 1px solid rgba(0, 255, 255, 0.8);
+}
+
+.J {
+    background: linear-gradient(135deg, #0080ff 0%, #0050c0 100%);
+    border: 1px solid rgba(0, 128, 255, 0.8);
+}
+
+.L {
+    background: linear-gradient(135deg, #ff8000 0%, #c05000 100%);
+    border: 1px solid rgba(255, 128, 0, 0.8);
+}
+
+.O {
+    background: linear-gradient(135deg, #ffff00 0%, #c0c000 100%);
+    border: 1px solid rgba(255, 255, 0, 0.8);
+}
+
+.S {
+    background: linear-gradient(135deg, #00ff80 0%, #00c050 100%);
+    border: 1px solid rgba(0, 255, 128, 0.8);
+}
+
+.T {
+    background: linear-gradient(135deg, #c000ff 0%, #8000c0 100%);
+    border: 1px solid rgba(192, 0, 255, 0.8);
+}
+
+.Z {
+    background: linear-gradient(135deg, #ff0050 0%, #c00040 100%);
+    border: 1px solid rgba(255, 0, 80, 0.8);
+}
+
+/* Vylepšená animace pro smazání řádku */
+@keyframes flash {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.1); brightness: 1.5; }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.flash {
+    animation: flash 0.3s 3;
+    box-shadow: 0 0 15px white;
+    z-index: 2;
+}
+
+/* Animace pro nové tetromino */
+@keyframes spawn {
+    0% { transform: scale(0.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.spawn {
+    animation: spawn 0.3s ease-out;
+}
+
+/* Vizuální efekt pro zrychlení pádu */
+@keyframes speedlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 20px; }
+}
+
+.speed-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, 
+                                transparent 80%, 
+                                rgba(0, 255, 255, 0.05) 85%,
+                                transparent 90%);
+    background-size: 100% 20px;
+    pointer-events: none;
+    animation: speedlines 0.5s linear infinite;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.hard-drop .speed-lines {
+    opacity: 1;
+}
+
+/* Vzhled pro pozastavení hry */
+.paused::before {
+    content: "PAUSED";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #0ff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    z-index: 10;
+    letter-spacing: 3px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    border: 2px solid rgba(0, 255, 255, 0.3);
+}
+
+/* Vzhled pro konec hry */
+.game-over::before {
+    content: "GAME OVER";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ff3050;
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    z-index: 10;
+    letter-spacing: 3px;
+    box-shadow: 0 0 30px rgba(255, 0, 80, 0.5);
+    border: 2px solid rgba(255, 0, 80, 0.3);
+}
+
+/* Level up animace */
+@keyframes levelUp {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.level-up {
+    animation: levelUp 0.5s ease-out;
+    text-shadow: 0 0 15px #0ff;
+}
+
+/* Responzivní design pro mobilní zařízení */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    #grid {
+        grid-template-columns: repeat(10, minmax(20px, 28px));
+        grid-template-rows: repeat(20, minmax(20px, 28px));
+    }
+    
+    .game-info {
+        order: 2;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .score-container, .next-piece, .controls {
+        flex: 1 1 45%;
+        min-width: 150px;
+    }
+    
+    #start-button {
+        flex: 1 1 100%;
+        margin-top: 10px;
+    }
+}
+
+/* Pro velmi malé obrazovky */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    #grid {
+        grid-template-columns: repeat(10, minmax(16px, 24px));
+        grid-template-rows: repeat(20, minmax(16px, 24px));
+    }
+    
+    .game-info {
+        gap: 10px;
+    }
+    
+    .score-container, .next-piece, .controls {
+        padding: 10px;
+    }
+}
+
+/* Přidat na konec vašeho CSS souboru */
+
+/* Dotykové ovládání */
+#touch-controls {
+    display: none; /* Výchozí stav - skryté na desktopu */
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    height: 80px;
+}
+
+.touch-button {
+    width: 55px;
+    height: 55px;
+    background: rgba(0, 255, 255, 0.2);
+    border: 2px solid rgba(0, 255, 255, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0ff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent; /* Odstranění zvýraznění při dotyku */
+}
+
+.touch-button svg {
+    width: 28px;
+    height: 28px;
+}
+
+.touch-button:active {
+    transform: scale(0.9);
+    background: rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+#touch-drop {
+    background: rgba(255, 128, 0, 0.2);
+    border: 2px solid rgba(255, 128, 0, 0.6);
+    color: #ff8000;
+    box-shadow: 0 0 10px rgba(255, 128, 0, 0.3);
+}
+
+#touch-drop:active {
+    background: rgba(255, 128, 0, 0.4);
+    box-shadow: 0 0 15px rgba(255, 128, 0, 0.5);
+}
+
+/* Přidat nebo upravit mediální dotazy */
+@media (max-width: 768px) {
+    #touch-controls {
+        display: flex; /* Zobrazit na mobilních zařízeních */
+    }
+    
+    /* Upravit rozložení kontejneru, aby byl prostor pro tlačítka */
+    .container {
+        padding-bottom: 100px;
+    }
+    
+    /* Přidat novou položku do seznamu ovládacích prvků */
+    .controls p:last-child::after {
+        content: "\A(dotykové ovládání pod hrou)";
+        white-space: pre;
+        display: inline-block;
+        margin-top: 5px;
+        font-style: italic;
+        font-size: 14px;
+        color: #0ff;
+    }
+}
+
+/* Pro malé obrazovky telefonu - zmenšit tlačítka */
+@media (max-width: 480px) {
+    .touch-button {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .touch-button svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    #touch-controls {
+        height: 60px;
+    }
+}
