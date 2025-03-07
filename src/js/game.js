@@ -73,6 +73,15 @@ export function gameOver() {
     // Přehrajeme zvuk pro konec hry
     playSound('gameOver');
     
+    // Zobrazení mezirolové reklamy na konci hry
+    if (typeof gdsdk !== 'undefined' && typeof gdsdk.showAd === 'function') {
+        setTimeout(() => {
+            gdsdk.showAd().catch((error) => {
+                console.error("Chyba reklamy při Game Over:", error);
+            });
+        }, 1000); // Malé zpoždění pro lepší UX
+    }
+    
     // Pokud je dostupná globální funkce gameOver (z main.js), voláme ji
     if (typeof window.gameOver === 'function') {
         window.gameOver();
@@ -264,6 +273,24 @@ export function togglePause() {
         timerId = null;
         grid.classList.add('paused');
     } else {
+        timerId = setInterval(moveDown, dropSpeed);
+        grid.classList.remove('paused');
+    }
+}
+
+// Přidáme nové funkce speciálně pro SDK
+export function pause() {
+    if (!isPaused && !isGameOver) {
+        isPaused = true;
+        clearInterval(timerId);
+        timerId = null;
+        grid.classList.add('paused');
+    }
+}
+
+export function resume() {
+    if (isPaused && !isGameOver) {
+        isPaused = false;
         timerId = setInterval(moveDown, dropSpeed);
         grid.classList.remove('paused');
     }

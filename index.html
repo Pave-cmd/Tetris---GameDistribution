@@ -81,6 +81,31 @@
             transform: translateY(1px);
         }
     </style>
+    <script>
+        window["GD_OPTIONS"] = {
+            "gameId": "9e9514393f854850bc1071125b958e86", // Váš GameDistribution ID
+            "onEvent": function(event) {
+                switch (event.name) {
+                    case "SDK_GAME_START":
+                        // Obnovení hry po reklamě
+                        if (typeof window.resumeGame === 'function') {
+                            window.resumeGame();
+                        }
+                        break;
+                    case "SDK_GAME_PAUSE":
+                        // Pozastavení hry pro reklamu
+                        if (typeof window.pauseGame === 'function') {
+                            window.pauseGame();
+                        }
+                        break;
+                    case "SDK_REWARDED_WATCH_COMPLETE":
+                        // Pro odměněné reklamy, pokud je implementujete
+                        break;
+                }
+            },
+        };
+    </script>
+    <script src="https://html5.api.gamedistribution.com/main.min.js"></script>
 </head>
 <body>
     <div class="container">
